@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+	<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+	<script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
+	<script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
+	<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+	<script src="inflate.min.js"></script>
+
+	<style>
+		.overlay {
+			position: fixed;
+			/* Sit on top of the page content */
+			width: 100%;
+			/* Full width (cover the whole page) */
+			height: 100%;
+			/* Full height (cover the whole page) */
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-image: url("backgroundWhile.PNG");
+			/*   background-color:#ffffff; Black background with opacity */
+			z-index: 2;
+			/* Specify a stack order in case you're using a different order for other elements */
+			cursor: pointer;
+			/* Add a pointer on hover */
+		}
+
+		.uimusic {
+			position: absolute;
+			z-index: 100;
+			top: 83%;
+			right: 10%;
+			width: 80%;
+			height: 12%;
+			box-sizing: border-box;			
+		}
+
+		.prevent-click {
+			pointer-events: none;
+		}
+	</style>
+
+</head>
+<script>
+	AFRAME.registerComponent('plane', {
+		init: function () {
+			const material = this.el.getObject3D('mesh').material;
+			material.colorWrite = false;
+		}
+	});
+</script>
+
+<body style="margin : 0px; overflow: hidden;">
+	<a-scene embedded="true" arjs='debugUIEnabled:false; trackingMethod: best;'
+		device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" loading-screen="enabled:false"
+		precision: mediump>
+		<a-plane id="planedelete" plane color="blue" width="5" height="3" position="0 2.2 -6"></a-plane>
+		<a-assets>
+			<img id="my-image2" src="button.png">
+			<img id="my-image">
+		</a-assets>
+		<a-marker type='pattern' url='pattern_211221.patt' markerhandler>
+			<a-entity id="omikujichien" position="0 0 0" rotation=" -90 0 0" scale="1 1 1"
+				fbx-model="src: fbx/omi01_ani.fbx;" visible="false" shadow="receive: true; cast: true"
+				animation="clip:anii"></a-entity>
+
+			<a-entity id="omikujichien2" position="0 0 0" rotation=" -90 0 0" scale="1 1 1"
+				fbx-model="src: fbx/omi02_ani.fbx;" visible="false" shadow="receive: true; cast: true"
+				animation="clip:anii"></a-entity>
+
+			<a-entity id="omikujichien3" position="0 0 0" rotation=" -90 0 0" scale="1 1 1"
+				fbx-model="src: fbx/omi03_ani.fbx;" visible="false" shadow="receive: true; cast: true"
+				animation="clip:anii"></a-entity>
+
+			<a-entity id="omikujichien4" position="0 0 0" rotation=" -90 0 0" scale="1 1 1"
+				fbx-model="src: fbx/omi04_ani.fbx;" visible="false" shadow="receive: true; cast: true"
+				animation="clip:anii"></a-entity>
+
+			<a-entity id="omikujichien5" position="0 0 0" rotation=" -90 0 0" scale="1 1 1"
+				fbx-model="src: fbx/omi05_ani.fbx;" visible="false" shadow="receive: true; cast: true"
+				animation="clip:anii"></a-entity>
+		</a-marker>
+
+		<a-image clickhandler src="#my-image2" id="aimage2" position="-0.006 -0.25 -0.9" visible="false"  height="0.3"
+			width="0.48"> </a-image>
+		<a-image src="#my-image" id="aimage" position="-0.005 0.05 -0.95" visible="false" height="0.6" width="0.4">
+		</a-image>
+
+		<a-image src="Assets/omi_01.png" id="aimage" position="-0.005 0.02 -0.95" visible="false" height="0.6"
+			width="0.4">
+		</a-image>
+		<a-image src="Assets/omi_03.png" id="aimage2" position="-0.005 0.02 -0.95" visible="false" height="0.6"
+			width="0.4">
+		</a-image>
+		<a-image src="Assets/omi_02.png" id="aimage3" position="-0.005 0.02 -0.95" visible="false" height="0.6"
+			width="0.4">
+		</a-image>
+		<a-image src="Assets/omi_04.png" id="aimage4" position="-0.005 0.02 -0.95" visible="false" height="0.6"
+			width="0.4">
+		</a-image>
+		<a-image src="Assets/omi_05.png" id="aimage5" position="-0.005 0.02 -0.95" visible="false" height="0.6"
+			width="0.4">
+		</a-image>
+
+		<a-entity id="rig" position="0 0 0">
+			<a-entity id="camera" camera="fov: 60; far: 5000; near: 0.001" wasd-controls="acceleration: 10"
+				cursor-visible="true" position="0 0 0" rotation="0 0 0">				
+			</a-entity>
+		</a-entity>
+
+	</a-scene>
+	<div class="uimusic" id="containermusic"></div>
+
+	<script>
+		$('#containermusic').hide();
+		var scene = document.querySelector('#containermusic');
+		let elementsL = document.querySelectorAll("#omikujichien, #omikujichien2, #omikujichien3, #omikujichien4, #omikujichien5");
+		let randomNum = Math.floor(Math.random() * elementsL.length);
+
+		scene.addEventListener("click", function (e) {
+			let omikujic = document.querySelector("#omikujichien");
+			let omikujic2 = document.querySelector("#omikujichien2");
+			let omikujic3 = document.querySelector("#omikujichien3");
+			let omikujic4 = document.querySelector("#omikujichien4");
+			let omikujic5 = document.querySelector("#omikujichien5");
+
+			let myEl = document.querySelector("#aimage2");
+			let planemat = document.querySelector("#planedelete");
+			myEl.setAttribute("visible", "false");
+			myEl.setAttribute('position', '-15 -15 9');
+			$('#containermusic').hide();
+			scene.style.display = 'none';
+			$('#containermusic').addClass('prevent-click');
+			setTimeout(() => { 
+planemat.setAttribute('position', '0 0 20');}, 2000);
+			if (randomNum == 0) {
+				omikujic.setAttribute('animation-mixer', {
+					clip: "*", loop: "repeat", repetitions: 1, crossFadeDuration: 0.4,
+					clampWhenFinished: true
+				});
+
+				omikujic.addEventListener('animation-finished', function () {
+					//planemat.setAttribute('position', '0 0 20');
+
+					let imageTrue1 = document.getElementsByTagName("a-image")[2];
+					//imageTrue1.setAttribute('visible', true);
+					//omikujic.setAttribute('position', '0 20 20');
+					//let video = document.getElementById("vid");
+					//video.setAttribute('position', '0 0 20');
+
+				});
+			}
+			else if (randomNum == 1) {
+				omikujic2.setAttribute('animation-mixer', {
+					clip: "*", loop: "repeat", repetitions: 1, crossFadeDuration: 0.4,
+					clampWhenFinished: true
+				});
+
+				omikujic2.addEventListener('animation-finished', function () {
+					//planemat.setAttribute('position', '0 0 20');
+					//let imageTrue1 = document.getElementsByTagName("a-image")[3];
+					//imageTrue1.setAttribute('visible', true);
+					//omikujic2.setAttribute('position', '0 20 20');
+					//let video = document.getElementById("vid");
+					//video.setAttribute('position', '0 0 20');
+				});
+			}
+			else if (randomNum == 2) {
+				omikujic3.setAttribute('animation-mixer', {
+					clip: "*", loop: "repeat", repetitions: 1, crossFadeDuration: 0.4,
+					clampWhenFinished: true
+				});
+
+				omikujic3.addEventListener('animation-finished', function () {
+					//planemat.setAttribute('position', '0 0 20');
+					//let imageTrue1 = document.getElementsByTagName("a-image")[4];
+					//imageTrue1.setAttribute('visible', true);
+					//omikujic3.setAttribute('position', '0 20 20');
+					//let video = document.getElementById("vid");
+					//video.setAttribute('position', '0 0 20');
+				});
+			}
+			else if (randomNum == 3) {
+				omikujic4.setAttribute('animation-mixer', {
+					clip: "*", loop: "repeat", repetitions: 1, crossFadeDuration: 0.4,
+					clampWhenFinished: true
+				});
+
+				omikujic4.addEventListener('animation-finished', function () {
+					//planemat.setAttribute('position', '0 0 20');
+					//let imageTrue1 = document.getElementsByTagName("a-image")[5];
+					//imageTrue1.setAttribute('visible', true);
+					//omikujic4.setAttribute('position', '0 20 20');
+					//let video = document.getElementById("vid");
+					//video.setAttribute('position', '0 0 20');
+				});
+			}
+			else if (randomNum == 4) {
+				omikujic5.setAttribute('animation-mixer', {
+					clip: "*", loop: "repeat", repetitions: 1, crossFadeDuration: 0.4,
+					clampWhenFinished: true
+				});
+
+				omikujic5.addEventListener('animation-finished', function () {
+					//planemat.setAttribute('position', '0 0 20');
+					//let imageTrue1 = document.getElementsByTagName("a-image")[6];
+					//imageTrue1.setAttribute('visible', true);
+					//omikujic5.setAttribute('position', '0 20 20');
+					//let video = document.getElementById("vid");
+					//video.setAttribute('position', '0 0 20');
+				});
+			}
+		});
+
+		AFRAME.registerComponent('markerhandler', {
+			tick: function () {
+				let omikujicc = document.querySelector("#omikujichien");
+				let omikujicc2 = document.querySelector("#omikujichien2");
+				let omikujicc3 = document.querySelector("#omikujichien3");
+				let omikujicc4 = document.querySelector("#omikujichien4");
+				let omikujicc5 = document.querySelector("#omikujichien5");
+
+
+				let imageTrue = document.getElementsByTagName("a-image")[0];
+				if (document.querySelector("a-marker").object3D.visible == true) {
+					imageTrue.setAttribute('visible', true);
+					$('#containermusic').show();
+					if (randomNum == 0) {
+						omikujicc.setAttribute('visible', true);
+					}
+					else if (randomNum == 1) {
+						omikujicc2.setAttribute('visible', true);
+					}
+					else if (randomNum == 2) {
+						omikujicc3.setAttribute('visible', true);
+					}
+					else if (randomNum == 3) {
+						omikujicc4.setAttribute('visible', true);
+					}
+					else if (randomNum == 4) {
+						omikujicc5.setAttribute('visible', true);
+					}
+				} else if (document.querySelector("a-marker").object3D.visible == false) {
+					//  $('#containermusic').hide();
+					//imageTrue.setAttribute('visible', false);
+					//fbxid.setAttribute('visible', false);
+				}
+			}
+		});
+	</script>
+</body>
+</html>
